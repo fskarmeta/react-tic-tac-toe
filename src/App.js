@@ -3,8 +3,8 @@ import "./App.css";
 
 function App() {
   const [hide, setHide] = useState(false);
-  const [cuadrados, cambiarCuadrados] = useState(Array(9).fill(null));
-  const [jugador, cambiarJugador] = useState(true);
+  const [squares, changeSquares] = useState(Array(9).fill(null));
+  const [player, changePlayer] = useState(true);
   const [username, setUsername] = useState({ player1: "", player2: "" });
 
   function handleChangePlayer1(e) {
@@ -21,66 +21,53 @@ function App() {
     });
   }
 
-  // Ocultar elementos
   const hider = { display: "none" };
   const shower = { display: "inherit" };
 
   function hideToggler() {
     if (hide) {
-      // Vaciar los arrays
-      cambiarCuadrados(Array(9).fill(null));
-      // Reiniciar Usernames
-      // setUsername({player1: null, player2:null})
+      changeSquares(Array(9).fill(null));
     }
     setHide(!hide);
   }
 
-  // Jugador Uno y Ocultar Elementos
   function hideToggler1() {
     setHide(!hide);
-    cambiarJugador(true);
+    changePlayer(true);
   }
 
-  // Jugador Dos y Ocultar Elementos
   function hideToggler2() {
     setHide(!hide);
-    cambiarJugador(false);
+    changePlayer(false);
   }
 
-  //Clik en cuadrados
+
   function handeClick(i) {
-    //Copia de los cuadrados actuales
-    const nuevosCuadrados = [...cuadrados];
-    // Si tiene substancia retornar (evitar doble click) O si hubo un ganador
-    if (ganadora(cuadrados) || nuevosCuadrados[i]) return;
-    //  Especificar si entra X o O
-    nuevosCuadrados[i] = jugador ? "X" : "O";
-    // Actualizar cuadrados en el state
-    cambiarCuadrados(nuevosCuadrados);
-    // Intercalar X y O
-    cambiarJugador(!jugador);
+    const newSquares = [...squares];
+    if (winner(squares) || newSquares[i]) return;
+    newSquares[i] = player ? "X" : "O";
+    changeSquares(newSquares);
+    changePlayer(!player);
   }
 
-  // Definir ganador
-  const ganador = ganadora(cuadrados);
 
-  // Cuando hay empate
-  const empate = cuadrados.includes(null);
+  const theWinner = winner(squares);
+  const empate = squares.includes(null);
 
-  //  Si no hay Empate => Ganador => Si no hay Ganador => Siguiente jugador
+
   let turno;
   turno = empate ?
-  ganador
-    ? jugador
-      ? `Winner is: ${username.player2}  (${ganador})`
-      : `Winner is: ${username.player1}  (${ganador})`
+  theWinner
+    ? player
+      ? `Winner is: ${username.player2}  (${theWinner})`
+      : `Winner is: ${username.player1}  (${theWinner})`
     : `Next player: ${
-        jugador ? username.player1 + " (X) " : username.player2 + " (O) "
+        player ? username.player1 + " (X) " : username.player2 + " (O) "
       }` : "Draw";
 
-  //Función para saber si se cumplío una combinación ganadora
-  function ganadora(arr) {
-    let combinaciones = [
+
+  function winner(arr) {
+    let combinations = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -91,8 +78,8 @@ function App() {
       [2, 4, 6],
     ];
 
-    for (let i = 0; i < combinaciones.length; i++) {
-      const [a, b, c] = combinaciones[i];
+    for (let i = 0; i < combinations.length; i++) {
+      const [a, b, c] = combinations[i];
       if (arr[a] && arr[a] === arr[b] && arr[b] === arr[c]) {
         return arr[a];
       }
@@ -165,7 +152,7 @@ function App() {
           </div>
         </div>
         <div className="container" style={hide ? shower : hider}>
-          {cuadrados.map((e, i) => (
+          {squares.map((e, i) => (
             <div
               key={i}
               className={`box box${i}`}

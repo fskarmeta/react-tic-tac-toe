@@ -63,7 +63,7 @@ function App() {
       : `Winner is: ${username.player1}  (${theWinner})`
     : `Next player: ${
         player ? username.player1 + " (X) " : username.player2 + " (O) "
-      }` : "Draw";
+      }` : "Tie";
 
 
   function winner(arr) {

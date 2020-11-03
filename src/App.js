@@ -91,6 +91,7 @@ function App() {
     <div className="mastercontainer">
       <div className="title">
         <h1>Tic Tac Toe in React.js</h1>
+        <spam className="turn">By Bafian</spam>
       </div>
       <div className="overcontainer">
         <span style={hide ? shower : hider} className="turn">

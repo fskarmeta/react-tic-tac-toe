@@ -41,7 +41,6 @@ function App() {
     changePlayer(false);
   }
 
-
   function handeClick(i) {
     const newSquares = [...squares];
     if (winner(squares) || newSquares[i]) return;
@@ -50,21 +49,19 @@ function App() {
     changePlayer(!player);
   }
 
-
   const theWinner = winner(squares);
-  const empate = squares.includes(null);
-
+  const tie = squares.includes(null);
 
   let turno;
-  turno = empate ?
-  theWinner
-    ? player
-      ? `Winner is: ${username.player2}  (${theWinner})`
-      : `Winner is: ${username.player1}  (${theWinner})`
-    : `Next player: ${
-        player ? username.player1 + " (X) " : username.player2 + " (O) "
-      }` : "Tie";
-
+  turno = tie
+    ? theWinner
+      ? player
+        ? `Winner is: ${username.player2}  (${theWinner})`
+        : `Winner is: ${username.player1}  (${theWinner})`
+      : `Next player: ${
+          player ? username.player1 + " (X) " : username.player2 + " (O) "
+        }`
+    : "Tie";
 
   function winner(arr) {
     let combinations = [
@@ -91,7 +88,7 @@ function App() {
     <div className="mastercontainer">
       <div className="title">
         <h1>Tic Tac Toe in React.js</h1>
-        <spam className="turn">By Bafian</spam>
+        <spam className="turn">By Fabian Skarmeta</spam>
       </div>
       <div className="overcontainer">
         <span style={hide ? shower : hider} className="turn">
